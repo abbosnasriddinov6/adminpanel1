@@ -1,0 +1,93 @@
+{
+  "students": [
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    },
+    {
+      "id": "46138",
+      "firstName": "John Doe",
+      "lastName": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "41245",
+      "name": "Tom Smith",
+      "username": "tomsmith",
+      "email": "tomsmith@gmail.com",
+      "level": "senior"
+    }
+  ]
+}
