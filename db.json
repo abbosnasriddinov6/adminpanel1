@@ -2,83 +2,53 @@
   "students": [
     {
       "id": "46138",
-      "firstName": "John Doe",
+      "name": "John Doe",
       "lastName": "John Doe",
       "username": "johndoe",
       "email": "johndoe@gmail.com",
       "group": "React N32"
     },
     {
-      "id": "46138",
-      "firstName": "John Doe",
-      "lastName": "John Doe",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
+      "id": "3c83",
+      "name": "Abbosbek Nasriddinov",
+      "email": "abbosbeknasriddino001@gmail.com",
+      "username": "abbosbek",
+      "group": "React N25"
+    },
+    {
+      "id": "2b1c",
+      "name": "Abbosbek Nasriddinov",
+      "email": "abbosbeknasriddino001@gmail.com",
+      "username": "abbosbek",
+      "group": "React N25"
+    },
+    {
+      "id": "50ca",
+      "name": "Abbosbek Nasriddinov",
+      "email": "abbosbeknasriddino001@gmail.com",
+      "username": "ID11381",
       "group": "React N32"
     },
     {
-      "id": "46138",
-      "firstName": "John Doe",
-      "lastName": "John Doe",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
+      "name": "Temur Shernazarov",
+      "username": "temurbek",
+      "email": "temurbek@gmail.com",
+      "group": "React N32",
+      "id": "4dc5"
+    },
+    {
+      "id": "7a02",
+      "name": "Abbosbek Nasriddinov",
+      "email": "abbosbeknasriddino001@gmail.com",
+      "username": "abbosbek",
       "group": "React N32"
     },
     {
-      "id": "46138",
-      "firstName": "John Doe",
-      "lastName": "John Doe",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
-      "group": "React N32"
-    },
-    {
-      "id": "46138",
-      "firstName": "John Doe",
-      "lastName": "John Doe",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
-      "group": "React N32"
-    },
-    {
-      "id": "46138",
-      "firstName": "John Doe",
-      "lastName": "John Doe",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
-      "group": "React N32"
-    },
-    {
-      "id": "46138",
-      "firstName": "John Doe",
-      "lastName": "John Doe",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
-      "group": "React N32"
-    },
-    {
-      "id": "46138",
-      "firstName": "John Doe",
-      "lastName": "John Doe",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
-      "group": "React N32"
-    },
-    {
-      "id": "46138",
-      "firstName": "John Doe",
-      "lastName": "John Doe",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
-      "group": "React N32"
-    },
-    {
-      "id": "46138",
-      "firstName": "John Doe",
-      "lastName": "John Doe",
-      "username": "johndoe",
-      "email": "johndoe@gmail.com",
-      "group": "React N32"
+      "id": "b59c",
+      "name": "weef",
+      "email": "temurbek@gmail.com",
+      "username": "ID11381",
+      "group": "All"
     }
   ],
   "teachers": [
@@ -88,6 +58,13 @@
       "username": "tomsmith",
       "email": "tomsmith@gmail.com",
       "level": "senior"
+    },
+    {
+      "name": "Abbosbek Nasriddinov",
+      "username": "@programmer_001",
+      "email": "temurbek@gmail.com",
+      "group": "React N31",
+      "id": "1ff8"
     }
   ]
 }

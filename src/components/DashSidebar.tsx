@@ -20,7 +20,7 @@ const DashSidebar = () => {
                 EduAdmin
               </Sidebar.Item>
             </Link>
-            <Link to="/" className="mt-8 inline-block">
+            <Link to="/dashboard" className="mt-8 inline-block">
               <Sidebar.Item icon={HiChartPie} as="div">
                 Dashboard
               </Sidebar.Item>

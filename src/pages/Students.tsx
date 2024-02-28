@@ -1,21 +1,95 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useStudent from '../app/useStudent';
 import Loader from '../components/Loader';
 import '../scss/main.scss'
+import { NavLink, Navigate } from 'react-router-dom';
+import { StudentType } from '../types/Student.type';
 
-const Students = () => {
+const Students = ({hidden, setHidden}) => {
+  if (!hidden) {
+    return <Navigate to="/" replace />;
+    console.log(hidden);
+  }
+
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedGroup, setSelectedGroup] = useState<string>("");
+  const [editingStudent, setEditingStudent] = useState<StudentType | null>(
+    null
+  );
+  const [editedName, setEditedName] = useState<string>("");
+  const [editedUserName, setEditedUserName] = useState<string>("");
+  const [editedEmail, setEditedEmail] = useState<string>("");
+  const [editedGroup, setEditedGroup] = useState<string>("");
+
+  useEffect(() => {
+    getStudents();
+  }, []);
+
+  const handleDelete = async (id: number): Promise<void> => {
+    try {
+      // Perform delete operation
+      await fetch(`http://localhost:3000/students/${id}`, {
+        method: "DELETE",
+      });
+      // After successful deletion, fetch updated students list
+      getStudents();
+    } catch (err) {
+      console.error("Error deleting student:", err);
+    }
+  };
+
+  const handleEdit = (student: StudentType) => {
+    setEditingStudent(student);
+    setEditedName(student.name);
+    setEditedUserName(student.username);
+    setEditedEmail(student.email);
+    setEditedGroup(student.group);
+  };
+
+  const saveEditedStudent = async () => {
+    try {
+      if (editingStudent) {
+        // Perform update operation
+        await fetch(`http://localhost:3000/students/${editingStudent.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: editedName,
+            username: editedUserName,
+            email: editedEmail,
+            group: editedGroup,
+          }),
+        });
+        // After successful update, fetch updated students list
+        getStudents();
+        // Reset editing state
+        setEditingStudent(null);
+      }
+    } catch (err) {
+      console.error("Error updating student:", err);
+    }
+  };
   const { loading, error, students, getStudents } = useStudent();
 
   useEffect(() => {
     getStudents();
   }, []);
+
+  // const filteredStudents = students.filter(
+  //   (student: StudentType) =>
+  //     student.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+  //     (selectedGroup === "" || student.group === selectedGroup)
+  // );
+
   return (
     <>
-      <div className='h1'>
+      <div className='h1 bg-gray-100'>
         <h1 >Students</h1>
-        <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+        <NavLink to='/add'><button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
           Add
-        </button>
+        </button></NavLink>
 
 
       </div>
@@ -91,11 +165,9 @@ const Students = () => {
                   </div>
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  First Name
+                   Name
                 </th>
-                <th scope="col" className="px-6 py-3">
-                  Last Name
-                </th>
+               
                 <th scope="col" className="px-6 py-3">
                   Username
                 </th>
@@ -119,12 +191,11 @@ const Students = () => {
                       <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
                     </div>
                   </td>
+
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {student.firstName}
+                    {student.name}
                   </th>
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {student.lastName}
-                  </th>
+                
                   <td className="px-6 py-4">
                     {student.username}
                   </td>
@@ -137,15 +208,16 @@ const Students = () => {
                   <td className="px-6 py-4 flex gap-5">
 
                     <div>
-                      <button type="button" className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Edit</button>
-                      <button type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                      {editingStudent === student ? (
+                        <button onClick={saveEditedStudent} type="button" className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">Save</button>
+                      ) : (
+                        <button onClick={() => handleEdit(student)} type="button" className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900">Edit</button>
+                      )}
+                      <button onClick={() => handleDelete(student.id)} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
 
                     </div>
 
                   </td>
-
-
-
                 </tr>
               </tbody>
             ) : null}

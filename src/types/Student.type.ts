@@ -1,6 +1,7 @@
 export type StudentType = {
-  id: string;
+  id: number;
   firstName: string;
+  name: string;
   lastName: string;
   username: string;
   email: string;
@@ -12,3 +13,12 @@ export type StudentStoreType = {
   error: any;
   getStudents: () => void;
 };
+
+export type StudentInfo = {
+  name: string;
+  username: string;
+  email: string;
+  group: string;
+};
+
+
