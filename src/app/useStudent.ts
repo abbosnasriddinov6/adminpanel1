@@ -1,37 +1,49 @@
-import { create } from 'zustand';
-import {  StudentStoreType } from '../types/Student.type';
 
+import axios from "axios";
+import { create } from "zustand";
+import { storetype } from "../types/Student.type";
 
-
-const useStudent = create<StudentStoreType>((set) => ({
+export const getall = create<storetype>((set) => ({
   loading: false,
-  students: [],
+  products: [],
   error: null,
-  getStudents: async () => {
+
+  getproducts: async () => {
+    set(() => ({ loading: true }));
     try {
+      const res = await axios.get('https://65f7443bb4f842e8088565a2.mockapi.io/products');
+      const data = res.data;
       set(() => ({
-        loading: true,
+        products: data,
+        loading: false
       }));
-      const res = await fetch('http://localhost:3000/students');
-      const data = await res.json();
-      set(() => ({
-        loading: false,
-        students: data,
-        error: null,
-      }));
-    } catch (err: any) {
-      set(() => ({
-        loading: false,
-        error: err.message,
-      }));
+    } catch (error) {
+      console.error(error);
     }
   },
+
+  post: async (product: any) => {
+    try {
+      console.log(product);
+      const res = await axios.post(`https://65f7443bb4f842e8088565a2.mockapi.io/products`, product);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+
+  deleteproduct: async (id: any) => {
+    try {
+      console.log(id);
+      const res = await axios.delete(`https://65f7443bb4f842e8088565a2.mockapi.io/products/${id}`);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }));
 
+export default getall;
 
 
 
 
-
-
-export default useStudent;

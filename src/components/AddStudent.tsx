@@ -1,163 +1,78 @@
-import { Alert, Button, Label, Select, TextInput } from 'flowbite-react';
-import { useState, FormEvent } from 'react';
-import { StudentInfo } from '../types/Student.type';
-import { useNavigate } from 'react-router-dom';
-import { useFormik, FormikProps } from 'formik';
+"use client";
+import { useState } from "react"
+import getall from "../app/useStudent"
+import { NavLink } from "react-router-dom"
+import { useImageStore } from "../types/Student.type";
 
-type StudentFormType = {
-    initialValues: StudentInfo;
-    validate: (values: StudentInfo) => {
-        name: string;
-        username: string;
-        email: string;
-    };
-    onSubmit: (value: StudentInfo) => void;
-};
 
-const AddStudents = () => {
-    const formik: FormikProps<StudentInfo> = useFormik<StudentInfo>({
-        initialValues: {
-            name: '',
-            email: '',
-            username: '',
-            group: 'All',
-        },
-        validate: (values) => {
-            const errors: {
-                name: string;
-                username: string;
-                email: string;
-            } = {
-                name: '',
-                email: '',
-                username: '',
-            };
-            if (values.name === '') {
-                errors.name = 'Name is required';
-            }
-            if (values.email === '') {
-                errors.email = 'Email is required';
-            } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(values.email)) {
-                errors.email = 'Invalid email format';
-            }
-            if (values.username === '') {
-                errors.username = 'Username is required';
-            }
-            return errors;
-        },
-    } as StudentFormType);
 
-    const navigate = useNavigate();
-    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+const AddStudent = () => {
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        try {
-            if (
-                !formik.values.name ||
-                !formik.values.username ||
-                !formik.values.email
-            ) {
-                setErrorMsg('Please fill all required fields');
-            } else {
-                setErrorMsg('');
-                const response = await fetch('http://localhost:3000/students', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formik.values),
-                });
+    const setImage = useImageStore((state) => state.setImage);
 
-                if (!response.ok) {
-                    setErrorMsg('Failed to add student');
-                } else {
-                    formik.setValues({
-                        name: '',
-                        email: '',
-                        username: '',
-                        group: 'React N32',
-                    });
-                    navigate('/students');
-                }
-            }
-        } catch (error) {
-            setErrorMsg('Failed to add student');
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            setImage(file);
         }
     };
 
+
+    const { post, getproducts } = getall()
+    const [product, setproduct] = useState({
+        name: '',
+        title: '',
+
+        description: '',
+        price: '',
+    })
+
+    const addproduct = () => {
+        post(product)
+        setTimeout(() => {
+            getproducts()
+        }, 300)
+
+    }
+
     return (
         <div>
-            <h2 className="text-center text-5xl	my-4">Add Students</h2>
-            <form
-                onSubmit={handleSubmit}
-                className="flex max-w-md flex-col gap-4 m-auto"
-            >
-                <div>
-                    <Label htmlFor="name">Name:</Label>
-                    <TextInput
-                        type="text"
-                        id="name"
-                        name="name"
-                        onBlur={formik.handleBlur}
-                        value={formik.values.name}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.touched.name && formik.errors.name && (
-                        <span className="text-red-500 pt-2">{formik.errors.name}</span>
-                    )}
-                </div>
-                <div>
-                    <label htmlFor="username">Username:</label>
-                    <TextInput
-                        type="text"
-                        id="username"
-                        name="username"
-                        onBlur={formik.handleBlur}
-                        value={formik.values.username}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.touched.username && formik.errors.username && (
-                        <span className="text-red-500 pt-2">{formik.errors.username}</span>
-                    )}
-                </div>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <TextInput
-                        type="email"
-                        id="email"
-                        name="email"
-                        onBlur={formik.handleBlur}
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.touched.email && formik.errors.email && (
-                        <span className="text-red-500 pt-2">{formik.errors.email}</span>
-                    )}
-                </div>
-                <div>
-                    <Label htmlFor="group">Group:</Label>
-                    <Select
-                        id="group"
-                        name="group"
-                        value={formik.values.group}
-                        onChange={formik.handleChange}
-                    >
-                        <option value="All">All</option>
-                        <option value="React N31">React N31</option>
-                        <option value="React N32">React N32</option>
-                        <option value="React N33">React N33</option>
-                    </Select>
-                </div>
-                <Button type="submit">Add Student</Button>
-                {errorMsg && (
-                    <Alert color="failure" className="mt-5">
-                        {errorMsg}
-                    </Alert>
-                )}
-            </form>
-        </div>
-    );
-};
+            <div className="add__component container ">
+                <section className="text-gray-600 body-font">
+                    <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
+                        <div className="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 mx-auto flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+                            <h2 className="text-gray-900 text-lg font-medium title-font mb-5">Add products</h2>
+                            <div className="relative mb-4">
+                                <label htmlFor="full-name" className="leading-7 text-sm text-gray-600">Name</label>
+                                <input onChange={(e) => setproduct({ ...product, name: e.target.value })} type="text" id="full-name" name="full-name" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            </div>
 
-export default AddStudents;
+                            <div className="relative mb-4">
+                                <label htmlFor="email" className="leading-7 text-sm text-gray-600">Title</label>
+                                <input onChange={(e) => setproduct({ ...product, title: e.target.value })} type="text" id="text" name="text" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            </div>
+                            <div className="relative mb-4">
+                                <label htmlFor="email" className="leading-7 text-sm text-gray-600">Price</label>
+                                <input onChange={(e) => setproduct({ ...product, price: e.target.value })} type="number" id="text" name="text" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            </div>
+                            <div className="relative mb-4">
+                                <label htmlFor="email" className="leading-7 text-sm text-gray-600">adsgsdg</label>
+                                <input accept="image/*" onChange={handleImageChange} type="file" id="text" name="file" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                {/* <img src={URL.createObjectURL(useImageStore((state) => state.image))} alt="Uploaded Image" /> */}
+
+                            </div>
+
+                            <NavLink to='/students'><button className="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" onClick={addproduct}>Add</button></NavLink>
+                            <p className="text-xs text-gray-500 mt-3">Literally you probably haven't heard of them jean shorts.</p>
+                        </div>
+                    </div>
+
+                </section>
+
+
+            </div>
+        </div>
+    )
+}
+
+export default AddStudent
